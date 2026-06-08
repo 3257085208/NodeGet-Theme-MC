@@ -2,28 +2,22 @@
 
 一个带有 Minecraft 像素方块风格的 NodeGet 公开探针主题。
 
-本仓库面向 NodeGet 主题分发服务使用：构建后的静态文件会同步到 `docs/`，可以直接用 jsDelivr、GitHub Pages 或任意支持 CORS 的静态服务器分发。
+本仓库用于上传到 GitHub 后，由 Cloudflare Pages 自动构建并作为 NodeGet 主题分发站点使用。NodeGet 后台导入时填写的是 Cloudflare Pages 的页面地址，不是 GitHub 仓库地址。
 
-## 开发
+## 本地开发
 
 ```bash
 npm install
 npm run dev
 ```
 
-## 构建静态分发版
+## 本地构建
 
 ```bash
-npm run build:distribution
+npm run build
 ```
 
-构建完成后会生成：
-
-- `dist/`：本次构建产物。
-- `dist/NodeGet-Theme-MC.zip`：本地可下载的主题压缩包。
-- `docs/`：可提交到仓库并用于静态分发的目录，不包含 zip。
-
-`docs/` 内包含 NodeGet 规范主题需要的关键文件：
+构建后会生成 `dist/`，其中包含 NodeGet 规范主题需要的文件：
 
 - `nodeget-theme.json`
 - `nodeget-theme-files.json`
@@ -31,61 +25,47 @@ npm run build:distribution
 - `custom.css`
 - `custom.js`
 - `assets/` 和其他静态资源
+- `NodeGet-Theme-MC.zip`
 
-## 推荐导入方式
+## Cloudflare Pages 部署
 
-推送仓库后，直接使用 jsDelivr 分发 `docs/` 目录，不需要 Cloudflare Pages，也不需要 GitHub Pages：
+1. 把本仓库推送到 GitHub。
+2. 在 Cloudflare Pages 创建项目，连接这个 GitHub 仓库。
+3. 构建命令填写：`npm run build`
+4. 输出目录填写：`dist`
+5. Node.js 版本建议设置为 `22`，至少需要 `20.19+`。
+6. 部署完成后得到类似 `https://nodeget-theme-mc.pages.dev` 的 Pages 域名。
 
-```text
-https://dash.nodeget.com/#/dashboard/theme-management?add=https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs
-```
+如果 Cloudflare Pages 项目名不是 `nodeget-theme-mc`，请同步修改 `nodeget-theme.json` 里的 `dist_page`。
 
-不要把 GitHub 仓库页面地址填进面板，例如不要使用 `https://github.com/3257085208/NodeGet-Theme-MC`。仓库页面返回的是 HTML，面板按 JSON 解析时会报 `Unexpected token '<'`。
+## NodeGet 后台导入
 
-也可以先在浏览器打开下面两个地址确认返回 JSON：
-
-```text
-https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs/nodeget-theme.json
-https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs/nodeget-theme-files.json
-```
-
-## GitHub Pages 分发
-
-1. 运行 `npm run build:distribution`。
-2. 提交并推送 `docs/`。
-3. 在 GitHub 仓库 `Settings -> Pages` 中选择 `Deploy from a branch`。
-4. Branch 选择 `main`，目录选择 `/docs`。
-5. 分发地址为 `https://3257085208.github.io/NodeGet-Theme-MC/`。
-
-控制面板快捷导入地址：
+导入地址填写 Cloudflare Pages 站点根地址，例如：
 
 ```text
-https://dash.nodeget.com/#/dashboard/theme-management?add=https://3257085208.github.io/NodeGet-Theme-MC/
+https://nodeget-theme-mc.pages.dev
 ```
 
-## 其他静态服务器
+快捷导入链接示例：
 
-也可以把 `docs/` 上传到 nginx、对象存储、VPS 静态目录或其他静态托管服务。
-
-需要满足 NodeGet 分发要求：
-
-- 可以公开访问 `nodeget-theme.json` 和 `nodeget-theme-files.json`。
-- 静态服务器开启 CORS 跨域访问。
-- 建议支持 IPv4/IPv6 双栈访问。
-
-nginx 可参考：
-
-```nginx
-location / {
-  add_header Access-Control-Allow-Origin * always;
-  add_header Access-Control-Allow-Methods "GET, OPTIONS" always;
-  add_header Access-Control-Allow-Headers "*" always;
-  try_files $uri $uri/ /index.html;
-}
+```text
+https://dash.nodeget.com/#/dashboard/theme-management?add=https://nodeget-theme-mc.pages.dev
 ```
+
+导入前可以先打开下面两个地址确认返回 JSON：
+
+```text
+https://nodeget-theme-mc.pages.dev/nodeget-theme.json
+https://nodeget-theme-mc.pages.dev/nodeget-theme-files.json
+```
+
+如果看到 HTML，或者后台提示 `Unexpected token '<'`，说明导入地址不对，常见原因是：
+
+- 填了 GitHub 仓库页面地址。
+- Cloudflare Pages 还没有部署成功。
+- Pages 输出目录没有设置为 `dist`。
+- 访问的是 Pages 404 页面，而不是 `nodeget-theme.json`。
 
 ## 配置说明
 
-`config.json` 由构建脚本生成。分发给用户后，NodeGet 控制面板会按主题规范读取文件列表并生成对应配置。
-
-如果手动部署静态文件，可以修改 `config.json` 里的 `site_tokens` 和 `user_preferences` 后再上传。
+`config.json` 会在构建时生成。Cloudflare Pages 可设置环境变量 `NODEGET_CONFIG` 覆盖默认配置；也可以在 NodeGet 后台导入主题后按面板生成配置。
