@@ -14,6 +14,7 @@ import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
 import { Flag } from './Flag'
+import { GrassBlock, MinecraftHud, OreBlock, PixelMob } from './MinecraftDecor'
 import { StatusDot } from './StatusDot'
 import { bytes, pct, relativeAge, uptime } from '../utils/format'
 import { deriveUsage, displayName, distroLogo, osLabel, virtLabel } from '../utils/derive'
@@ -140,6 +141,25 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
+        <Card className="p-5 mc-panel">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-end gap-4">
+              <PixelMob type={node.online ? 'villager' : 'zombie'} label={node.online ? '守村人在线' : '僵尸入侵'} />
+              <PixelMob type="enderman" label="末影链路" />
+              <GrassBlock />
+            </div>
+            <MinecraftHud
+              health={node.online ? 10 : 2}
+              hunger={Math.max(1, Math.round((100 - (u.mem ?? 0)) / 10))}
+              armor={Math.max(1, Math.round((100 - (u.cpu ?? 0)) / 12))}
+            />
+            <div className="flex gap-2">
+              <OreBlock ore="diamond" />
+              <OreBlock ore="redstone" />
+            </div>
+          </div>
+        </Card>
+
         <Section title="资源方块">
           <div className="flex flex-wrap justify-around gap-4 sm:gap-6">
             <Ring label="CPU" value={u.cpu} sub={loadAvg ?? undefined} />

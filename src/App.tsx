@@ -11,6 +11,7 @@ import { NodeTable } from './components/NodeTable'
 import { NodeDetail } from './components/NodeDetail'
 import { TagFilter } from './components/TagFilter'
 import { RegionFilter } from './components/RegionFilter'
+import { GrassBlock, MinecraftHud, OreBlock, PixelMob } from './components/MinecraftDecor'
 
 const WorldMap = lazy(() =>
   import('./components/WorldMap').then(m => ({ default: m.WorldMap })),
@@ -224,11 +225,26 @@ export function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 min-w-full lg:min-w-[28rem]">
-              <HeroStat label="在线区块" value={String(onlineCount)} tone="primary" />
-              <HeroStat label="离线区块" value={String(Math.max(offlineCount, 0))} tone="destructive" />
-              <HeroStat label="区域传送门" value={String(regions.list.length)} />
-              <HeroStat label="标签生物群系" value={String(allTags.length)} />
+            <div className="min-w-full space-y-3 lg:min-w-[30rem]">
+              <div className="flex items-end justify-between gap-3 border-2 border-border bg-background/55 p-3 mc-chip">
+                <PixelMob type="villager" label="Villager" />
+                <PixelMob type="zombie" label="Zombie" />
+                <PixelMob type="enderman" label="Enderman" />
+                <PixelMob type="creeper" label="Creeper" />
+                <GrassBlock className="hidden sm:block" />
+              </div>
+              <MinecraftHud health={Math.min(10, Math.max(1, onlineCount || 1))} hunger={Math.min(10, Math.max(1, totalCount || 1))} armor={Math.min(10, regions.list.length + 3)} />
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <HeroStat label="在线区块" value={String(onlineCount)} tone="primary" />
+                <HeroStat label="离线区块" value={String(Math.max(offlineCount, 0))} tone="destructive" />
+                <HeroStat label="区域传送门" value={String(regions.list.length)} />
+                <HeroStat label="标签生物群系" value={String(allTags.length)} />
+              </div>
+              <div className="flex justify-end gap-2">
+                <OreBlock ore="diamond" />
+                <OreBlock ore="redstone" />
+                <OreBlock ore="gold" />
+              </div>
             </div>
           </div>
         </section>

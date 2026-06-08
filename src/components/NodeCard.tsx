@@ -2,6 +2,7 @@ import { ArrowDown, ArrowUp, Clock, type LucideIcon } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Card } from './ui/card'
 import { Progress } from './ui/progress'
+import { MinecraftHud, PixelMob } from './MinecraftDecor'
 import { Flag } from './Flag'
 import { StatusDot } from './StatusDot'
 import { bytes, pct, relativeAge, uptime } from '../utils/format'
@@ -28,6 +29,7 @@ export function NodeCard({ node }: { node: Node }) {
         >
           <div className="flex items-center gap-2">
             <StatusDot online={node.online} />
+            <PixelMob type={node.online ? 'villager' : 'zombie'} className="scale-75 origin-left -mr-2" />
             {logo && (
                 <img src={logo} alt="" className="w-5 h-5 shrink-0 object-contain" loading="lazy" />
             )}
@@ -41,6 +43,12 @@ export function NodeCard({ node }: { node: Node }) {
             <span>{node.online ? '在线区块' : '离线区块'}</span>
             <span>{node.meta?.region || 'Void'}</span>
           </div>
+
+          <MinecraftHud
+            health={node.online ? 10 : 2}
+            hunger={Math.max(1, Math.round((100 - (u.mem ?? 0)) / 10))}
+            armor={Math.max(1, Math.round((100 - (u.cpu ?? 0)) / 12))}
+          />
 
           {(os || virt) && (
               <div className="font-mono text-xs text-muted-foreground truncate border-l-4 border-primary pl-2">

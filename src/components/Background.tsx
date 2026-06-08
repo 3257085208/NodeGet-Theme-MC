@@ -1,3 +1,5 @@
+import { GrassBlock, OreBlock } from './MinecraftDecor'
+
 export function Background() {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-soft" aria-hidden>
@@ -7,6 +9,10 @@ export function Background() {
       <div className="absolute left-[14%] top-[18%] h-6 w-16 mc-inset bg-white/30 dark:bg-white/10" />
       <div className="absolute right-[10%] top-[12%] h-10 w-28 mc-inset bg-white/30 dark:bg-white/10" />
       <div className="absolute right-[18%] top-[17%] h-6 w-16 mc-inset bg-white/25 dark:bg-white/10" />
+      <GrassBlock className="absolute left-[4%] bottom-[9%] opacity-70" />
+      <GrassBlock className="absolute right-[7%] bottom-[13%] opacity-60" />
+      <OreBlock ore="diamond" className="absolute left-[18%] bottom-[5%] opacity-50" />
+      <OreBlock ore="redstone" className="absolute right-[22%] bottom-[6%] opacity-45" />
     </div>
   )
 }
