@@ -59,12 +59,13 @@ https://nodeget-theme-mc.pages.dev/nodeget-theme.json
 https://nodeget-theme-mc.pages.dev/nodeget-theme-files.json
 ```
 
-如果看到 HTML，或者后台提示 `Unexpected token '<'`，说明导入地址不对，常见原因是：
+如果看到 HTML，或者后台提示 `Unexpected token '<'`，说明后台请求 JSON 时拿到了页面 HTML，常见原因是：
 
 - 填了 GitHub 仓库页面地址。
 - Cloudflare Pages 还没有部署成功。
 - Pages 输出目录没有设置为 `dist`。
 - 访问的是 Pages 404 页面，而不是 `nodeget-theme.json`。
+- Cloudflare Pages 没有重新部署最新提交，旧版本缺少 `nodeget-theme-files.json`。
 
 ## 配置说明
 
