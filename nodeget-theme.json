@@ -4,7 +4,7 @@
   "description": "A Minecraft inspired NodeGet status theme with chunk panels, overworld palette and blocky monitoring UI.",
   "author": "OpenAI x NodeSeekDev",
   "repository": "https://github.com/3257085208/NodeGet-Theme-MC",
-  "dist_page": "https://3257085208.github.io/NodeGet-Theme-MC",
+  "dist_page": "https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs",
   "user_preferences_form": {
     "version": "0.0.1",
     "items": [

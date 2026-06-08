@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -12,7 +12,12 @@ if (!existsSync(distPath)) {
 
 rmSync(docsPath, { recursive: true, force: true })
 mkdirSync(docsPath, { recursive: true })
-cpSync(distPath, docsPath, { recursive: true })
+
+for (const name of readdirSync(distPath)) {
+  if (name.endsWith('.zip')) continue
+  cpSync(resolve(distPath, name), resolve(docsPath, name), { recursive: true })
+}
+
 writeFileSync(resolve(docsPath, '.nojekyll'), '')
 
 console.log(`[distribution] synced ${distPath} to ${docsPath}`)

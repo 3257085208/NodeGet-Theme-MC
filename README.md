@@ -2,7 +2,7 @@
 
 一个带有 Minecraft 像素方块风格的 NodeGet 公开探针主题。
 
-本仓库面向 NodeGet 主题分发服务使用：构建后的静态文件会同步到 `docs/`，可以直接用 GitHub Pages 或任意支持 CORS 的静态服务器分发。
+本仓库面向 NodeGet 主题分发服务使用：构建后的静态文件会同步到 `docs/`，可以直接用 jsDelivr、GitHub Pages 或任意支持 CORS 的静态服务器分发。
 
 ## 开发
 
@@ -20,8 +20,8 @@ npm run build:distribution
 构建完成后会生成：
 
 - `dist/`：本次构建产物。
-- `dist/NodeGet-Theme-MC.zip`：可下载的主题压缩包。
-- `docs/`：可提交到仓库并用于 GitHub Pages 的静态分发目录。
+- `dist/NodeGet-Theme-MC.zip`：本地可下载的主题压缩包。
+- `docs/`：可提交到仓库并用于静态分发的目录，不包含 zip。
 
 `docs/` 内包含 NodeGet 规范主题需要的关键文件：
 
@@ -31,6 +31,23 @@ npm run build:distribution
 - `custom.css`
 - `custom.js`
 - `assets/` 和其他静态资源
+
+## 推荐导入方式
+
+推送仓库后，直接使用 jsDelivr 分发 `docs/` 目录，不需要 Cloudflare Pages，也不需要 GitHub Pages：
+
+```text
+https://dash.nodeget.com/#/dashboard/theme-management?add=https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs
+```
+
+不要把 GitHub 仓库页面地址填进面板，例如不要使用 `https://github.com/3257085208/NodeGet-Theme-MC`。仓库页面返回的是 HTML，面板按 JSON 解析时会报 `Unexpected token '<'`。
+
+也可以先在浏览器打开下面两个地址确认返回 JSON：
+
+```text
+https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs/nodeget-theme.json
+https://cdn.jsdelivr.net/gh/3257085208/NodeGet-Theme-MC@main/docs/nodeget-theme-files.json
+```
 
 ## GitHub Pages 分发
 
