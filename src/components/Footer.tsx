@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { parseGitRepo } from "../utils/git"
-import { ExternalLink, HardDriveDownload, FolderSync } from 'lucide-react'
+import { HardDriveDownload, FolderSync } from 'lucide-react'
 
 
 export function Footer({ text, repo, dist_page }: { text?: string, repo?: string, dist_page?: string }) {
@@ -20,10 +20,10 @@ export function Footer({ text, repo, dist_page }: { text?: string, repo?: string
   const laststDist = dist_page ? `${dist_page}/NodeGet-StatusShow.zip?version=v${latest}` : repo + '/releases'
 
   return (
-    <footer className="border-t">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-end gap-3 text-xs text-muted-foreground">
+    <footer className="border-t-2 border-border bg-background/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-end gap-3 text-xs text-muted-foreground">
         <a href={repo} target="_blank" rel="noreferrer" className="hover:text-primary transition-colors mr-auto">
-          {text || 'Powered by NodeGet'}
+          {text || 'Powered by NodeGet in the Overworld'}
         </a>
         <a href="download.html" target="_blank" rel="noreferrer" className="ml-2 flex items-center hover:text-primary transition-colors">
           <HardDriveDownload className='inline-block w-3 mr-1' />

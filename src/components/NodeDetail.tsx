@@ -99,14 +99,14 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
   return (
     <div
       ref={scrollRef}
-      className="fixed inset-0 z-50 bg-background overflow-y-auto animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 bg-background/95 overflow-y-auto animate-in fade-in duration-150"
     >
       <div
         ref={headerRef}
         className={`sticky top-0 z-10 transition-[background-color,backdrop-filter,border-color] duration-200 ${
           stuck
-            ? 'border-b border-border/40 backdrop-blur bg-background/70'
-            : 'border-b border-transparent'
+            ? 'border-b-2 border-border backdrop-blur bg-background/90 mc-panel'
+            : 'border-b-2 border-transparent'
         }`}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-2 sm:gap-3">
@@ -140,7 +140,7 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
-        <Section title="资源">
+        <Section title="资源方块">
           <div className="flex flex-wrap justify-around gap-4 sm:gap-6">
             <Ring label="CPU" value={u.cpu} sub={loadAvg ?? undefined} />
             <Ring
@@ -164,7 +164,7 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
         </Section>
 
         {history.length > 1 && (
-          <Section title={`近 ${history.length * 2} 秒趋势`}>
+          <Section title={`近 ${history.length * 2} 秒红石趋势`}>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <Spark
                 data={history}
@@ -201,15 +201,15 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
         )}
 
         <LatencyBlock
-          title="TCP Ping"
+          title="TCP 传送门"
           rows={tcpData}
           type="tcp_ping"
           loading={latencyLoading}
         />
-        <LatencyBlock title="Ping" rows={pingData} type="ping" loading={latencyLoading} />
+        <LatencyBlock title="Ping 信标" rows={pingData} type="ping" loading={latencyLoading} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Section title="系统">
+          <Section title="系统档案">
             <KV k="主机名" v={s?.system_host_name} />
             <KV k="操作系统" v={osLabel(node)} />
             <KV k="内核" v={s?.system_kernel || s?.system_kernel_version} />
@@ -255,8 +255,8 @@ export function NodeDetail({ node, onClose, showSource, pool }: Props) {
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <Card className="p-5">
-      <div className="text-xs uppercase tracking-wide text-muted-foreground mb-3">{title}</div>
+    <Card className="p-5 mc-panel">
+      <div className="text-[11px] uppercase tracking-[0.24em] text-muted-foreground mb-3">{title}</div>
       {children}
     </Card>
   )
@@ -265,7 +265,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 function KV({ k, v }: { k: string; v: ReactNode }) {
   if (v == null || v === '') return null
   return (
-    <div className="flex justify-between gap-3 text-sm py-1">
+    <div className="flex justify-between gap-3 text-sm py-1.5 border-b border-border/40 last:border-b-0">
       <span className="text-muted-foreground">{k}</span>
       <span className="font-mono text-right truncate">{v}</span>
     </div>
@@ -280,7 +280,7 @@ function Ring({ label, value, sub }: { label: string; value?: number; sub?: stri
 
   return (
     <div className="flex flex-col items-center gap-2 min-w-0">
-      <div className="relative w-24 h-24 sm:w-28 sm:h-28">
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28 border-2 border-border bg-secondary/50 mc-chip">
         <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
           <circle
             cx="50" cy="50" r={r}
@@ -303,7 +303,7 @@ function Ring({ label, value, sub }: { label: string; value?: number; sub?: stri
           {pct(value)}
         </div>
       </div>
-      <div className="text-sm font-medium">{label}</div>
+      <div className="text-sm font-semibold uppercase tracking-[0.18em]">{label}</div>
       {sub && (
         <div className="text-xs font-mono text-muted-foreground truncate max-w-full" title={sub}>
           {sub}
@@ -326,7 +326,7 @@ function Spark({ data, dataKey, label, stroke, domain, format }: SparkProps) {
   const last = Number(data.at(-1)?.[dataKey] ?? 0)
   const id = `g-${dataKey}`
   return (
-    <div className="rounded-md border bg-card/50 p-3">
+    <div className="border-2 border-border bg-card/60 p-3 mc-chip">
       <div className="flex justify-between text-[11px] mb-1">
         <span className="text-muted-foreground">{label}</span>
         <span className="font-mono">{format(last)}</span>
@@ -478,13 +478,13 @@ function LatencyStatsRow({
     <div
       onClick={onToggle}
       className={cn(
-        'flex items-center px-2 py-1 rounded-md text-xs cursor-pointer select-none transition-opacity hover:bg-muted/60',
+        'flex items-center px-2 py-1 text-xs cursor-pointer select-none transition-opacity hover:bg-muted/60',
         hidden && 'opacity-35',
       )}
     >
       <span className="flex items-center gap-2 flex-1 min-w-0">
         <span
-          className="inline-block w-4 h-0.5 rounded-full shrink-0"
+          className="inline-block w-4 h-1 shrink-0"
           style={{ background: color }}
         />
         <span className="truncate">{name}</span>
@@ -539,7 +539,7 @@ function CostSection({ meta }: { meta: NodeMeta }) {
           : 'bg-emerald-500'
 
   return (
-    <Section title="费用">
+    <Section title="资源费用">
       <KV k="月费" v={meta.price > 0 ? `${unit}${meta.price} / ${meta.priceCycle} 天` : null} />
       <KV k="到期" v={meta.expireTime || null} />
       <KV k="剩余" v={<span className={daysClass}>{daysLabel}</span>} />

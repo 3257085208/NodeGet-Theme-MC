@@ -3,14 +3,14 @@ import { type HTMLAttributes } from 'react'
 import { cn } from '../../utils/cn'
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center rounded-none border-2 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 mc-chip',
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground',
-        secondary: 'border-transparent bg-secondary text-secondary-foreground',
-        destructive: 'border-transparent bg-destructive text-destructive-foreground',
-        outline: 'text-foreground',
+        default: 'border-border bg-primary text-primary-foreground',
+        secondary: 'border-border bg-secondary text-secondary-foreground',
+        destructive: 'border-border bg-destructive text-destructive-foreground',
+        outline: 'border-border bg-background/70 text-foreground',
       },
     },
     defaultVariants: { variant: 'default' },

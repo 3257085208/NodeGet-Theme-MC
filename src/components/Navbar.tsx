@@ -41,19 +41,24 @@ export function Navbar({ siteName, logo, query, onQuery, view, onView, sort, onS
   return (
     <header
       ref={headerRef}
-      className={`sticky top-0 z-10 transition-[background-color,backdrop-filter,border-color] duration-200 ${
-        stuck
-          ? 'border-b border-border/40 backdrop-blur bg-background/70'
-          : 'border-b border-transparent'
-      }`}
+        className={`sticky top-0 z-10 transition-[background-color,backdrop-filter,border-color,box-shadow] duration-200 ${
+          stuck
+            ? 'border-b-2 border-border bg-background/90 backdrop-blur mc-panel'
+            : 'border-b-2 border-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 px-4 sm:px-6 py-3">
         <a
           href="./"
-          className="flex items-center gap-2 min-w-0 shrink-0 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-3 min-w-0 shrink-0 hover:opacity-90 transition-opacity"
         >
-          {logo && <img src={logo} alt="" className="w-6 h-6 rounded shrink-0" />}
-          <span className="font-semibold tracking-wide truncate">{siteName}</span>
+          {logo && <img src={logo} alt="" className="w-8 h-8 shrink-0 border-2 border-border object-cover" />}
+          <div className="min-w-0">
+            <div className="font-bold tracking-wide truncate mc-title">{siteName}</div>
+            <div className="hidden sm:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              Overworld Status Board
+            </div>
+          </div>
         </a>
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           <div className="hidden sm:block">

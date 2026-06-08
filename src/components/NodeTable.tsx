@@ -16,7 +16,7 @@ interface Props {
 
 export function NodeTable({ nodes, onOpen }: Props) {
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden mc-panel">
       <Table>
         <TableHeader>
           <TableRow>
@@ -41,7 +41,7 @@ export function NodeTable({ nodes, onOpen }: Props) {
               <TableRow
                 key={n.uuid}
                 onClick={() => onOpen?.(n.uuid)}
-                className={cn('cursor-pointer', !n.online && 'opacity-60')}
+                className={cn('cursor-pointer hover:bg-accent/45', !n.online && 'opacity-60')}
               >
                 <TableCell>
                   <StatusDot online={n.online} />

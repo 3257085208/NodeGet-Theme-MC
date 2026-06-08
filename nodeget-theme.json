@@ -1,9 +1,9 @@
 {
-  "name": "NodeGet Basic Theme",
-  "short": "NodeGetBasic",
-  "description": "NodeGet Basic Theme - a boilerplate for custom themes",
-  "author": "NodeSeekDev",
-  "repository": "https://github.com/NodeSeekDev/NodeGet-StatusShow",
+  "name": "NodeGet Minecraft Theme",
+  "short": "NodeGetMinecraft",
+  "description": "A Minecraft inspired NodeGet status theme with chunk panels, overworld palette and blocky monitoring UI.",
+  "author": "OpenAI x NodeSeekDev",
+  "repository": "https://github.com/3257085208/NodeGet-Theme-MC",
   "dist_page": "https://nodeget.pages.dev",
   "user_preferences_form": {
     "version": "0.0.1",
@@ -12,7 +12,7 @@
         "key": "site_name",
         "name": "站点标题",
         "type": "string",
-        "default": "NodeGet Status",
+        "default": "NodeGet Overworld Status",
         "help": "输入站点标题"
       },
       {
@@ -26,7 +26,7 @@
         "key": "footer",
         "name": "页脚文本",
         "type": "string",
-        "default": "Powered by NodeGet",
+        "default": "Powered by NodeGet in the Overworld",
         "help": "输入页脚文本"
       }
     ]

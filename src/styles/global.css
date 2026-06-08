@@ -4,47 +4,47 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 220 14% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 14% 92%;
-    --input: 220 14% 92%;
-    --ring: 217 91% 60%;
-    --radius: 0.75rem;
+    --background: 118 22% 88%;
+    --foreground: 28 22% 13%;
+    --card: 47 28% 82%;
+    --card-foreground: 28 22% 13%;
+    --popover: 47 28% 82%;
+    --popover-foreground: 28 22% 13%;
+    --primary: 102 55% 39%;
+    --primary-foreground: 48 80% 96%;
+    --secondary: 34 34% 67%;
+    --secondary-foreground: 28 22% 13%;
+    --muted: 52 20% 72%;
+    --muted-foreground: 31 18% 32%;
+    --accent: 198 56% 66%;
+    --accent-foreground: 28 22% 13%;
+    --destructive: 6 78% 56%;
+    --destructive-foreground: 48 80% 96%;
+    --border: 30 20% 28%;
+    --input: 45 16% 55%;
+    --ring: 102 55% 39%;
+    --radius: 0.125rem;
   }
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 5.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 5.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 217 91% 60%;
+    --background: 124 18% 10%;
+    --foreground: 48 50% 90%;
+    --card: 108 14% 16%;
+    --card-foreground: 48 50% 90%;
+    --popover: 108 14% 16%;
+    --popover-foreground: 48 50% 90%;
+    --primary: 102 55% 45%;
+    --primary-foreground: 50 60% 95%;
+    --secondary: 30 16% 22%;
+    --secondary-foreground: 48 50% 90%;
+    --muted: 118 12% 18%;
+    --muted-foreground: 45 14% 68%;
+    --accent: 205 52% 40%;
+    --accent-foreground: 48 50% 90%;
+    --destructive: 5 74% 46%;
+    --destructive-foreground: 48 50% 90%;
+    --border: 38 16% 28%;
+    --input: 38 16% 28%;
+    --ring: 102 55% 45%;
   }
   * {
     @apply border-border;
@@ -54,6 +54,10 @@
   body {
     @apply bg-background text-foreground font-sans;
     -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
   }
   *::-webkit-scrollbar {
     width: 10px;
@@ -74,33 +78,72 @@
 }
 
 .bg-soft {
-  background-color: hsl(220 33% 98%);
+  background-color: hsl(118 26% 72%);
   background-image:
-    radial-gradient(60rem 36rem at 12% -10%, rgba(99, 102, 241, 0.16), transparent 60%),
-    radial-gradient(48rem 32rem at 95% 0%, rgba(56, 189, 248, 0.18), transparent 60%),
-    radial-gradient(42rem 28rem at 85% 95%, rgba(244, 114, 182, 0.12), transparent 60%),
-    radial-gradient(38rem 30rem at 5% 90%, rgba(34, 197, 94, 0.10), transparent 60%);
+    linear-gradient(180deg, rgba(129, 212, 250, 0.75) 0%, rgba(186, 230, 253, 0.6) 28%, rgba(134, 239, 172, 0.22) 29%, rgba(134, 239, 172, 0.18) 100%),
+    linear-gradient(0deg, rgba(69, 93, 34, 0.35), rgba(69, 93, 34, 0.35)),
+    linear-gradient(90deg, rgba(56, 78, 24, 0.22) 50%, transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, 24px 24px, 24px 24px, 24px 24px;
   background-attachment: fixed;
 }
 
 .dark .bg-soft {
   background-color: hsl(var(--background));
-  background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
-  background-size: 22px 22px;
-  mask-image: radial-gradient(ellipse at top, black 40%, transparent 90%);
+  background-image:
+    linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(17, 24, 39, 0.92) 36%, rgba(52, 71, 32, 0.6) 37%, rgba(23, 31, 15, 0.94) 100%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: auto, 22px 22px, 22px 22px;
 }
 
 .card-soft {
-  background-color: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background-color: hsl(var(--card));
   box-shadow:
-    0 1px 2px rgba(15, 23, 42, 0.04),
-    0 8px 24px -12px rgba(15, 23, 42, 0.10);
+    inset 0 2px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.24),
+    0 0 0 2px rgba(0, 0, 0, 0.18),
+    0 12px 20px -16px rgba(0, 0, 0, 0.45);
 }
 .dark .card-soft {
   background-color: hsl(var(--card));
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.55),
+    0 0 0 2px rgba(0, 0, 0, 0.45),
+    0 16px 24px -18px rgba(0, 0, 0, 0.75);
+}
+
+.mc-panel {
+  background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.98) 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.24),
+    0 0 0 2px hsl(var(--border)),
+    6px 6px 0 rgba(28, 25, 23, 0.12);
+}
+
+.mc-title { text-shadow: 2px 2px 0 rgba(28, 25, 23, 0.28); }
+.mc-chip { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 0 1px hsl(var(--border)); }
+.mc-inset { box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.18); }
+.mc-progress { image-rendering: pixelated; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 0 1px hsl(var(--border)); }
+
+.mc-hero { position: relative; overflow: hidden; }
+.mc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255, 255, 255, 0.35) 0 4%, transparent 4.5%),
+    radial-gradient(circle at 24% 16%, rgba(255, 255, 255, 0.28) 0 3%, transparent 3.5%),
+    radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.26) 0 5%, transparent 5.5%),
+    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.06) 100%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.mc-hero > * { position: relative; z-index: 1; }
+.mc-stat {
+  background: linear-gradient(180deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.88) 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), inset 0 -2px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px hsl(var(--border));
 }

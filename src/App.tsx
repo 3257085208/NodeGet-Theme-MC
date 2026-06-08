@@ -183,6 +183,9 @@ export function App() {
   const logo = config.user_preferences.site_logo || DEFAULT_LOGO
   const empty = list.length === 0
   const hasErrors = errors.length > 0
+  const onlineCount = list.filter(node => node.online).length
+  const totalCount = list.length
+  const offlineCount = totalCount - onlineCount
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -199,6 +202,37 @@ export function App() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+        <section className="mc-panel mc-hero p-5 sm:p-6 lg:p-8">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-4">
+              <div className="inline-flex items-center gap-2 border-2 border-border bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
+                Minecraft Theme Loaded
+              </div>
+              <div className="space-y-2">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[0.08em] mc-title">
+                  {config.user_preferences.site_name || 'NodeGet Craft Status'}
+                </h1>
+                <p className="max-w-2xl text-sm sm:text-base text-foreground/80 leading-6">
+                  把 NodeGet 探针改造成像素风监控世界地图，用草方块、矿洞配色、区块面板和传送门筛选来展示你的节点状态。
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs sm:text-sm">
+                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Redstone Metrics</span>
+                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Beacon Uptime</span>
+                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Portal Regions</span>
+                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Chunk Explorer</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 min-w-full lg:min-w-[28rem]">
+              <HeroStat label="在线区块" value={String(onlineCount)} tone="primary" />
+              <HeroStat label="离线区块" value={String(Math.max(offlineCount, 0))} tone="destructive" />
+              <HeroStat label="区域传送门" value={String(regions.list.length)} />
+              <HeroStat label="标签生物群系" value={String(allTags.length)} />
+            </div>
+          </div>
+        </section>
+
         {!empty && (
           <RegionFilter
             regions={regions.list}
@@ -266,6 +300,31 @@ export function App() {
         showSource={(config.site_tokens?.length ?? 0) > 1}
         pool={pool}
       />
+    </div>
+  )
+}
+
+function HeroStat({
+  label,
+  value,
+  tone,
+}: {
+  label: string
+  value: string
+  tone?: 'primary' | 'destructive'
+}) {
+  return (
+    <div
+      className={`mc-stat p-3 sm:p-4 ${
+        tone === 'primary'
+          ? 'bg-primary/15'
+          : tone === 'destructive'
+            ? 'bg-destructive/15'
+            : ''
+      }`}
+    >
+      <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">{label}</div>
+      <div className="mt-2 text-2xl sm:text-3xl font-black mc-title">{value}</div>
     </div>
   )
 }

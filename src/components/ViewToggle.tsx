@@ -13,12 +13,12 @@ export function ViewToggle({ value, onChange }: { value: View; onChange: (v: Vie
 
   return (
     <div
-      className="relative inline-grid bg-muted p-1 rounded-md"
+      className="relative inline-grid bg-muted p-1 border-2 border-border mc-chip"
       style={{ gridTemplateColumns: `repeat(${ITEMS.length}, 1fr)` }}
     >
       <div
         aria-hidden
-        className="absolute top-1 bottom-1 left-1 rounded-sm bg-background shadow transition-transform duration-200 ease-out"
+        className="absolute top-1 bottom-1 left-1 bg-background border border-border transition-transform duration-200 ease-out"
         style={{
           width: `calc((100% - 0.5rem) / ${ITEMS.length})`,
           transform: `translateX(${idx * 100}%)`,
@@ -48,7 +48,7 @@ function Btn({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={`relative z-10 inline-flex items-center justify-center gap-1.5 px-3 py-1 text-sm font-medium rounded-sm transition-colors ${
+      className={`relative z-10 inline-flex items-center justify-center gap-1.5 px-3 py-1 text-sm font-semibold transition-colors ${
         active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
       }`}
     >

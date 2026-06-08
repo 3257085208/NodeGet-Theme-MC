@@ -22,7 +22,7 @@ export function NodeCard({ node }: { node: Node }) {
       <a href={`#${encodeURIComponent(node.uuid)}`} className="block">
         <Card
             className={cn(
-                'p-4 transition hover:border-primary/50 hover:shadow-md flex flex-col gap-3',
+                'p-4 transition hover:border-primary hover:-translate-y-0.5 flex flex-col gap-3 mc-panel',
                 !node.online && 'opacity-60',
             )}
         >
@@ -37,8 +37,13 @@ export function NodeCard({ node }: { node: Node }) {
             <Flag code={node.meta?.region} className="shrink-0" />
           </div>
 
+          <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            <span>{node.online ? '在线区块' : '离线区块'}</span>
+            <span>{node.meta?.region || 'Void'}</span>
+          </div>
+
           {(os || virt) && (
-              <div className="font-mono text-xs text-muted-foreground truncate">
+              <div className="font-mono text-xs text-muted-foreground truncate border-l-4 border-primary pl-2">
                 {[os, virt].filter(Boolean).join(' · ')}
               </div>
           )}
@@ -57,7 +62,7 @@ export function NodeCard({ node }: { node: Node }) {
             />
           </div>
 
-          <div className="pt-2.5 border-t border-dashed font-mono text-xs text-muted-foreground space-y-1.5">
+          <div className="pt-2.5 border-t-2 border-dashed font-mono text-xs text-muted-foreground space-y-1.5">
             <div className="flex items-center gap-3">
               <Stat icon={ArrowDown}>{bytes(u.netIn || 0)}/s</Stat>
               <Stat icon={ArrowUp}>{bytes(u.netOut || 0)}/s</Stat>
@@ -84,7 +89,7 @@ export function NodeCard({ node }: { node: Node }) {
 
 function Stat({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
   return (
-      <span className="inline-flex items-center gap-1">
+      <span className="inline-flex items-center gap-1 uppercase tracking-wide">
       <Icon className="h-3 w-3" />
         {children}
     </span>
@@ -104,11 +109,11 @@ function Metric({
 }) {
   return (
       <div className="min-w-0">
-        <div className="flex justify-between text-xs">
+        <div className="flex justify-between text-[11px] uppercase tracking-[0.18em]">
           <span className="text-muted-foreground">{label}</span>
           <span className="font-mono">{pct(value)}</span>
         </div>
-        <Progress value={value} indicatorClassName={loadColor(value)} className="mt-1 h-1.5" />
+        <Progress value={value} indicatorClassName={loadColor(value)} className="mt-1" />
         {sub && (
             <div
                 className="font-mono text-[11px] text-muted-foreground mt-1 truncate"
