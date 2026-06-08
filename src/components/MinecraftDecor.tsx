@@ -1,6 +1,18 @@
 import { cn } from '../utils/cn'
 
 type Mob = 'villager' | 'zombie' | 'enderman' | 'creeper'
+type Block = 'grass' | 'diamond' | 'redstone' | 'gold'
+
+const HEADS: Record<Mob | Block, string> = {
+  villager: 'https://mc-heads.net/avatar/MHF_Villager/96',
+  zombie: 'https://mc-heads.net/avatar/MHF_Zombie/96',
+  enderman: 'https://mc-heads.net/avatar/MHF_Enderman/96',
+  creeper: 'https://mc-heads.net/avatar/MHF_Creeper/96',
+  grass: 'https://mc-heads.net/avatar/MHF_Grass/96',
+  diamond: 'https://mc-heads.net/avatar/MHF_Diamond/96',
+  redstone: 'https://mc-heads.net/avatar/MHF_Redstone/96',
+  gold: 'https://mc-heads.net/avatar/MHF_Gold/96',
+}
 
 const HEARTS = ['♥', '♥', '♥', '♥', '♥', '♥', '♥', '♥', '♥', '♥']
 const FOOD = ['▰', '▰', '▰', '▰', '▰', '▰', '▰', '▰', '▰', '▰']
@@ -45,43 +57,31 @@ function HudRow({
 
 export function GrassBlock({ className }: { className?: string }) {
   return (
-    <div className={cn('mc-block relative h-14 w-14 border-2 border-border bg-[#8b5a2b]', className)}>
-      <div className="absolute inset-x-0 top-0 h-5 bg-[#4f9f35]" />
-      <div className="absolute left-1 top-1 h-2 w-2 bg-[#7bc95a]" />
-      <div className="absolute right-2 top-2 h-2 w-3 bg-[#2f6f26]" />
-      <div className="absolute left-2 top-7 h-2 w-2 bg-[#6f4122]" />
-      <div className="absolute right-3 bottom-2 h-2 w-2 bg-[#a06b38]" />
-    </div>
+    <MinecraftHead src={HEADS.grass} alt="Grass block" className={cn('h-14 w-14', className)} />
   )
 }
 
 export function OreBlock({ className, ore = 'diamond' }: { className?: string; ore?: 'diamond' | 'redstone' | 'gold' }) {
-  const color = ore === 'redstone' ? 'bg-red-500' : ore === 'gold' ? 'bg-yellow-400' : 'bg-cyan-300'
-  return (
-    <div className={cn('mc-block relative h-12 w-12 border-2 border-border bg-stone-500', className)}>
-      <span className={cn('absolute left-2 top-2 h-2 w-2', color)} />
-      <span className={cn('absolute right-2 top-4 h-2 w-3', color)} />
-      <span className={cn('absolute bottom-2 left-4 h-2 w-2', color)} />
-    </div>
-  )
+  return <MinecraftHead src={HEADS[ore]} alt={`${ore} ore`} className={cn('h-12 w-12', className)} />
 }
 
 export function PixelMob({ type, className, label }: { type: Mob; className?: string; label?: string }) {
   return (
     <div className={cn('inline-flex flex-col items-center gap-1', className)}>
-      <div className={cn('mc-mob', `mc-mob-${type}`)} aria-hidden>
-        <span className="mc-mob-head">
-          <span className="mc-eye mc-eye-left" />
-          <span className="mc-eye mc-eye-right" />
-          <span className="mc-mouth" />
-        </span>
-        <span className="mc-mob-body" />
-        <span className="mc-arm mc-arm-left" />
-        <span className="mc-arm mc-arm-right" />
-        <span className="mc-leg mc-leg-left" />
-        <span className="mc-leg mc-leg-right" />
-      </div>
+      <MinecraftHead src={HEADS[type]} alt={type} className="h-16 w-16" />
       {label && <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>}
     </div>
+  )
+}
+
+function MinecraftHead({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      className={cn('mc-head border-2 border-border bg-background object-cover', className)}
+    />
   )
 }
