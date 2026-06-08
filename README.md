@@ -1,82 +1,74 @@
-# NodeGet-StatusShow
+# NodeGet Minecraft Theme
 
-一个服务器状态展示页，NodeGet的公开探针页面
+一个带有 Minecraft 像素方块风格的 NodeGet 公开探针主题。
 
-欢迎开发者基于此版本进行定制，也欢迎 pr 到本项目
+本仓库面向 NodeGet 主题分发服务使用：构建后的静态文件会同步到 `docs/`，可以直接用 GitHub Pages 或任意支持 CORS 的静态服务器分发。
 
 ## 开发
 
 ```bash
-npm i
+npm install
 npm run dev
 ```
-## 一键部署
-一键部署需要主控的版本在0.2.6以上，请先到[控制面板](https://dash.nodeget.com/#/dashboard/node-manage?tab=servers)查看主控版本
 
-<a href="https://dash.nodeget.com/#/dashboard/theme-management?add=https://nodeget.pages.dev">
-  <img src="https://dash.nodeget.com/deploy-button.png" alt="deploy button" width="230px" />
-</a>
+## 构建静态分发版
 
+```bash
+npm run build:distribution
+```
 
-## 基于静态文件部署
+构建完成后会生成：
 
-本项目 build 完是纯静态站， 丢哪都行
+- `dist/`：本次构建产物。
+- `dist/NodeGet-Theme-MC.zip`：可下载的主题压缩包。
+- `docs/`：可提交到仓库并用于 GitHub Pages 的静态分发目录。
 
-官方准备了一份可以直接下载的编译结果，方便需要把静态文件部署到其他地方的用户
+`docs/` 内包含 NodeGet 规范主题需要的关键文件：
 
-此下载链接始终与最新版保持一致，利用cloudflare pages自动编译生成
+- `nodeget-theme.json`
+- `nodeget-theme-files.json`
+- `config.json`
+- `custom.css`
+- `custom.js`
+- `assets/` 和其他静态资源
 
-<https://nodeget.pages.dev/NodeGet-StatusShow.zip>
+## GitHub Pages 分发
 
-下载后修改 config.json 的信息，然后可以上传到任意静态文件服务，如 nginx、 cloudflare pages、vercel
+1. 运行 `npm run build:distribution`。
+2. 提交并推送 `docs/`。
+3. 在 GitHub 仓库 `Settings -> Pages` 中选择 `Deploy from a branch`。
+4. Branch 选择 `main`，目录选择 `/docs`。
+5. 分发地址为 `https://3257085208.github.io/NodeGet-Theme-MC/`。
 
-## 基于 cloudflare pages编译部署
+控制面板快捷导入地址：
 
-此为官方最推荐的部署方式，方便升级至新版
+```text
+https://dash.nodeget.com/#/dashboard/theme-management?add=https://3257085208.github.io/NodeGet-Theme-MC/
+```
 
-Fork本仓库, 然后在cloudflare pages / vercel 直接部署，绑定域名
+## 其他静态服务器
 
-设定环境变量 `NODEGET_CONFIG`，需要是有效的JSON字符串
+也可以把 `docs/` 上传到 nginx、对象存储、VPS 静态目录或其他静态托管服务。
 
-```json
-{
-  "user_preferences":{
-    "site_name": "NodeGet Status",
-    "site_logo": "",
-    "footer": "Powered by NodeGet"
-  },
-  "site_tokens": [
-    {
-      "name": "master server node 1",
-      "backend_url": "wss://your-backend.example.com",
-      "token": "YOUR_TOKEN_HERE"
-    }
-  ]
+需要满足 NodeGet 分发要求：
+
+- 可以公开访问 `nodeget-theme.json` 和 `nodeget-theme-files.json`。
+- 静态服务器开启 CORS 跨域访问。
+- 建议支持 IPv4/IPv6 双栈访问。
+
+nginx 可参考：
+
+```nginx
+location / {
+  add_header Access-Control-Allow-Origin * always;
+  add_header Access-Control-Allow-Methods "GET, OPTIONS" always;
+  add_header Access-Control-Allow-Headers "*" always;
+  try_files $uri $uri/ /index.html;
 }
 ```
 
-要更新版本则就在 fork 的 GitHub 仓库点击 sync 就行，可以轻松且可控的升级
+## 配置说明
 
-> 环境变量是 **build 时** 注入的 改完之后必须重新部署一次才会生效 在面板里光改不重新跑 build 是没用的
+`config.json` 由构建脚本生成。分发给用户后，NodeGet 控制面板会按主题规范读取文件列表并生成对应配置。
 
-## 环境变量(旧版)
-
-旧版没有充分考虑扩展性，只支持有限的环境变量
-
-```
-SITE_NAME=狼牙的探针
-SITE_LOGO=https://example.com/logo.png
-SITE_FOOTER=Powered by NodeGet
-SITE_1=name="master-1",backend_url="wss://m1.example.com",token="abc123"
-SITE_2=name="master-2",backend_url="wss://m2.example.com",token="xyz789" 
-```
-
-前三个对应 `site_name` / `site_logo` / `footer` 不写就用默认值
-
-`SITE_n` 是主控 值用 `key="value"` 拿逗号串起来 支持 `name` / `backend_url` / `token` 三个字段 值里要塞引号或反斜杠的话用 `\"` 和 `\\` 转义
-
-从 `SITE_1` 开始连续往上数 中间断了就停 所以加新主控接着 `SITE_3` `SITE_4` 就行
-
-一个 `SITE_n` 都没设的话脚本啥也不干 直接用仓库里那份 `config.json` 本地 `npm run dev` 走的是 vite 直接起 也不会触发这个脚本
-
-可以只有一个 `SITE` 不强制 `SITE_2` `SITE_3` 之类的
+如果手动部署静态文件，可以修改 `config.json` 里的 `site_tokens` 和 `user_preferences` 后再上传。

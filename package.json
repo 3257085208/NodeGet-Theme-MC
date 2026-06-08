@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:distribution": "npm run build && node scripts/sync-distribution.mjs",
     "postbuild": "node scripts/build-template-config.mjs && node scripts/build-filelist.mjs && node scripts/build-zip.mjs && node scripts/build-config.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json"

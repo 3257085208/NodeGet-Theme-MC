@@ -17,7 +17,7 @@ export function Footer({ text, repo, dist_page }: { text?: string, repo?: string
   }, [])
 
   const outdated = latest != null && latest !== __APP_VERSION__
-  const laststDist = dist_page ? `${dist_page}/NodeGet-StatusShow.zip?version=v${latest}` : repo + '/releases'
+  const laststDist = dist_page ? `${dist_page}/NodeGet-Theme-MC.zip?version=v${latest}` : repo + '/releases'
 
   return (
     <footer className="border-t-2 border-border bg-background/80">
