@@ -11,7 +11,7 @@ import { NodeTable } from './components/NodeTable'
 import { NodeDetail } from './components/NodeDetail'
 import { TagFilter } from './components/TagFilter'
 import { RegionFilter } from './components/RegionFilter'
-import { GrassBlock, MinecraftHud, OreBlock, PixelMob } from './components/MinecraftDecor'
+import { GrassBlock, InventoryBar, MenuButton, MinecraftHud, OreBlock } from './components/MinecraftDecor'
 
 const WorldMap = lazy(() =>
   import('./components/WorldMap').then(m => ({ default: m.WorldMap })),
@@ -203,36 +203,25 @@ export function App() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
-        <section className="mc-panel mc-hero p-5 sm:p-6 lg:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 border-2 border-border bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
-                Minecraft Theme Loaded
+        <section className="mc-title-screen overflow-hidden border-4 border-black p-5 sm:p-7 lg:p-9">
+          <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl space-y-5">
+              <div className="inline-flex items-center gap-2 bg-[#f7e26b] px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-[#3d2a00] rotate-[-2deg] mc-splash">
+                Now with NodeGet servers!
               </div>
-              <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-[0.08em] mc-title">
-                  {config.user_preferences.site_name || 'NodeGet Craft Status'}
-                </h1>
-                <p className="max-w-2xl text-sm sm:text-base text-foreground/80 leading-6">
-                  把 NodeGet 探针改造成像素风监控世界地图，用草方块、矿洞配色、区块面板和传送门筛选来展示你的节点状态。
-                </p>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-[0.04em] mc-title text-white">
+                {config.user_preferences.site_name || 'NodeGet Craft Status'}
+              </h1>
+              <div className="grid max-w-xl gap-2 sm:grid-cols-2">
+                <MenuButton>Multiplayer</MenuButton>
+                <MenuButton>Server List</MenuButton>
+                <MenuButton>Resource Pack</MenuButton>
+                <MenuButton>Options</MenuButton>
               </div>
-              <div className="flex flex-wrap gap-2 text-xs sm:text-sm">
-                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Redstone Metrics</span>
-                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Beacon Uptime</span>
-                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Portal Regions</span>
-                <span className="border-2 border-border bg-background/70 px-3 py-1.5 mc-chip">Chunk Explorer</span>
-              </div>
+              <InventoryBar active={view === 'cards' ? 0 : view === 'table' ? 1 : 2} />
             </div>
 
-            <div className="min-w-full space-y-3 lg:min-w-[30rem]">
-              <div className="flex items-end justify-between gap-3 border-2 border-border bg-background/55 p-3 mc-chip">
-                <PixelMob type="villager" label="Villager" />
-                <PixelMob type="zombie" label="Zombie" />
-                <PixelMob type="enderman" label="Enderman" />
-                <PixelMob type="creeper" label="Creeper" />
-                <GrassBlock className="hidden sm:block" />
-              </div>
+            <div className="min-w-full space-y-3 lg:min-w-[28rem]">
               <MinecraftHud health={Math.min(10, Math.max(1, onlineCount || 1))} hunger={Math.min(10, Math.max(1, totalCount || 1))} armor={Math.min(10, regions.list.length + 3)} />
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <HeroStat label="在线区块" value={String(onlineCount)} tone="primary" />
@@ -241,6 +230,7 @@ export function App() {
                 <HeroStat label="标签生物群系" value={String(allTags.length)} />
               </div>
               <div className="flex justify-end gap-2">
+                <GrassBlock />
                 <OreBlock ore="diamond" />
                 <OreBlock ore="redstone" />
                 <OreBlock ore="gold" />

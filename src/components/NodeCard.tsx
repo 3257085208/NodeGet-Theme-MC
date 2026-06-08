@@ -2,7 +2,7 @@ import { ArrowDown, ArrowUp, Clock, type LucideIcon } from 'lucide-react'
 import { Badge } from './ui/badge'
 import { Card } from './ui/card'
 import { Progress } from './ui/progress'
-import { MinecraftHud, PixelMob } from './MinecraftDecor'
+import { InventoryBar, MinecraftHud, PixelMob } from './MinecraftDecor'
 import { Flag } from './Flag'
 import { StatusDot } from './StatusDot'
 import { bytes, pct, relativeAge, uptime } from '../utils/format'
@@ -23,13 +23,14 @@ export function NodeCard({ node }: { node: Node }) {
       <a href={`#${encodeURIComponent(node.uuid)}`} className="block">
         <Card
             className={cn(
-                'p-4 transition hover:border-primary hover:-translate-y-0.5 flex flex-col gap-3 mc-panel',
+                'p-0 transition hover:-translate-y-0.5 flex flex-col gap-0 mc-server-card',
                 !node.online && 'opacity-60',
             )}
         >
-          <div className="flex items-center gap-2">
+          <div className="mc-grass-strip h-3" />
+          <div className="flex items-center gap-3 p-4 pb-3">
+            <PixelMob type={node.online ? 'villager' : 'zombie'} className="shrink-0" />
             <StatusDot online={node.online} />
-            <PixelMob type={node.online ? 'villager' : 'zombie'} className="scale-75 origin-left -mr-2" />
             {logo && (
                 <img src={logo} alt="" className="w-5 h-5 shrink-0 object-contain" loading="lazy" />
             )}
@@ -39,24 +40,26 @@ export function NodeCard({ node }: { node: Node }) {
             <Flag code={node.meta?.region} className="shrink-0" />
           </div>
 
-          <div className="flex items-center justify-between gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          <div className="flex items-center justify-between gap-2 px-4 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
             <span>{node.online ? '在线区块' : '离线区块'}</span>
             <span>{node.meta?.region || 'Void'}</span>
           </div>
 
-          <MinecraftHud
-            health={node.online ? 10 : 2}
-            hunger={Math.max(1, Math.round((100 - (u.mem ?? 0)) / 10))}
-            armor={Math.max(1, Math.round((100 - (u.cpu ?? 0)) / 12))}
-          />
+          <div className="px-4 pt-3">
+            <MinecraftHud
+              health={node.online ? 10 : 2}
+              hunger={Math.max(1, Math.round((100 - (u.mem ?? 0)) / 10))}
+              armor={Math.max(1, Math.round((100 - (u.cpu ?? 0)) / 12))}
+            />
+          </div>
 
           {(os || virt) && (
-              <div className="font-mono text-xs text-muted-foreground truncate border-l-4 border-primary pl-2">
+              <div className="mx-4 mt-3 font-mono text-xs text-muted-foreground truncate border-l-4 border-primary pl-2">
                 {[os, virt].filter(Boolean).join(' · ')}
               </div>
           )}
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2.5 p-4">
             <Metric label="CPU" value={u.cpu} sub={cpu || null} subTitle={cpu || undefined} />
             <Metric
                 label="内存"
@@ -70,7 +73,7 @@ export function NodeCard({ node }: { node: Node }) {
             />
           </div>
 
-          <div className="pt-2.5 border-t-2 border-dashed font-mono text-xs text-muted-foreground space-y-1.5">
+          <div className="px-4 pb-3 pt-2.5 border-t-2 border-dashed font-mono text-xs text-muted-foreground space-y-1.5">
             <div className="flex items-center gap-3">
               <Stat icon={ArrowDown}>{bytes(u.netIn || 0)}/s</Stat>
               <Stat icon={ArrowUp}>{bytes(u.netOut || 0)}/s</Stat>
@@ -82,7 +85,7 @@ export function NodeCard({ node }: { node: Node }) {
           </div>
 
           {tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 px-4 pb-3">
                 {tags.map(t => (
                     <Badge key={t} variant="outline" className="text-[10px]">
                       {t}
@@ -91,6 +94,9 @@ export function NodeCard({ node }: { node: Node }) {
               </div>
           )}
         </Card>
+        <div className="mt-2">
+          <InventoryBar slots={5} active={node.online ? 0 : 2} />
+        </div>
       </a>
   )
 }

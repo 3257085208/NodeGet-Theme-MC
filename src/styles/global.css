@@ -118,13 +118,20 @@
     0 16px 24px -18px rgba(0, 0, 0, 0.75);
 }
 
-.mc-panel {
+.mc-panel,
+.mc-server-card {
   background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.98) 100%);
   box-shadow:
     inset 0 2px 0 rgba(255, 255, 255, 0.16),
     inset 0 -3px 0 rgba(0, 0, 0, 0.24),
     0 0 0 2px hsl(var(--border)),
     6px 6px 0 rgba(28, 25, 23, 0.12);
+}
+
+.mc-server-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), transparent 22%),
+    linear-gradient(90deg, hsl(var(--card)) 0%, hsl(var(--card) / 0.92) 100%);
 }
 
 .mc-title { font-family: "Press Start 2P", "Courier New", monospace; text-shadow: 3px 3px 0 rgba(28, 25, 23, 0.32); }
@@ -152,6 +159,48 @@
 .mc-stat {
   background: linear-gradient(180deg, hsl(var(--secondary)) 0%, hsl(var(--secondary) / 0.88) 100%);
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.14), inset 0 -2px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px hsl(var(--border));
+}
+
+.mc-title-screen {
+  position: relative;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255,255,255,0.18), transparent 18%),
+    linear-gradient(180deg, rgba(60, 159, 222, 0.82) 0 42%, rgba(92, 143, 53, 0.92) 43% 100%),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.12) 0 18px, transparent 18px 36px);
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.14), inset 0 -12px 0 rgba(0,0,0,0.22), 8px 8px 0 rgba(0,0,0,0.2);
+}
+
+.mc-splash {
+  font-family: "Press Start 2P", "Courier New", monospace;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+}
+
+.mc-menu-button {
+  color: white;
+  background: linear-gradient(180deg, #7f7f7f, #4d4d4d);
+  border: 3px solid #151515;
+  box-shadow: inset 0 2px 0 #bdbdbd, inset 0 -3px 0 #2b2b2b, 3px 3px 0 rgba(0,0,0,0.35);
+  text-shadow: 2px 2px 0 #1a1a1a;
+}
+
+.mc-menu-button:hover {
+  background: linear-gradient(180deg, #9b9b9b, #5c5c5c);
+}
+
+.mc-slot {
+  display: grid;
+  place-items: center;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.18), inset -2px -2px 0 rgba(0,0,0,0.55);
+}
+
+.mc-inventory-shadow {
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.12), inset -2px -2px 0 rgba(0,0,0,0.55), 4px 4px 0 rgba(0,0,0,0.22);
+}
+
+.mc-grass-strip {
+  background:
+    linear-gradient(180deg, #5faa36 0 55%, #6b4428 56% 100%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0 8px, transparent 8px 16px);
 }
 
 .mc-mob {

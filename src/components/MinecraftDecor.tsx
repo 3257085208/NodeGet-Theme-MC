@@ -20,10 +20,38 @@ const ARMOR = ['◆', '◆', '◆', '◆', '◆', '◆', '◆', '◆', '◆', '�
 
 export function MinecraftHud({ health = 10, hunger = 10, armor = 6 }: { health?: number; hunger?: number; armor?: number }) {
   return (
-    <div className="mc-hud grid gap-1.5 border-2 border-border bg-background/80 p-2 text-sm leading-none mc-chip">
+    <div className="mc-hud grid gap-1.5 border-2 border-black bg-[#1d1d1d]/90 p-2 text-sm leading-none text-white mc-inventory-shadow">
       <HudRow label="HP" items={HEARTS} active={health} activeClass="text-red-500" mutedClass="text-red-950/35 dark:text-red-900/45" />
       <HudRow label="FOOD" items={FOOD} active={hunger} activeClass="text-amber-600" mutedClass="text-amber-950/35 dark:text-amber-900/45" />
       <HudRow label="ARMOR" items={ARMOR} active={armor} activeClass="text-slate-500 dark:text-slate-300" mutedClass="text-slate-900/25 dark:text-slate-700/55" />
+    </div>
+  )
+}
+
+export function InventoryBar({ slots = 9, active = 0 }: { slots?: number; active?: number }) {
+  return (
+    <div className="flex justify-center gap-1">
+      {Array.from({ length: slots }).map((_, index) => (
+        <div
+          key={index}
+          className={cn(
+            'h-9 w-9 border-2 bg-[#2b2b2b] mc-slot',
+            index === active ? 'border-white' : 'border-[#121212]',
+          )}
+        >
+          {index === 0 && <GrassBlock className="h-7 w-7 border-0 shadow-none" />}
+          {index === 1 && <OreBlock ore="diamond" className="h-7 w-7 border-0 shadow-none" />}
+          {index === 2 && <OreBlock ore="redstone" className="h-7 w-7 border-0 shadow-none" />}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function MenuButton({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <div className={cn('mc-menu-button px-4 py-2 text-center text-sm uppercase tracking-[0.18em]', className)}>
+      {children}
     </div>
   )
 }
